@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Plan Master";
+}
+@model IEnumerable<PlanMaster>
+<h2>@ViewBag.Title</h2>
+<hr /><br />
+<hr />
+<div class="row" style="font-weight:700;">
+    <div class="col-md-3">Plan Name</div>
+    <div class="col-md-3">Plan Amount</div>
+    <div class="col-md-3">Service Tax</div>
+    <div class="col-md-3">Service Tax Amount</div>
+</div>
+<hr />
+@foreach (PlanMaster p in Model)
+{
+    <div class="row">
+        <div class="col-md-3">@p.PlanName</div>
+        <div class="col-md-3">$@p.PlanAmount</div>
+        <div class="col-md-3">@p.ServiceTax %</div>
+        <div class="col-md-3">$@p.ServiceTaxAmount</div>
+    </div>
+}

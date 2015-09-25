@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PaymentPlansModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="PaymentDetails">
+          <Key>
+            <PropertyRef Name="PaymentId" />
+          </Key>
+          <Property Name="PaymentId" Type="int" Nullable="false" />
+          <Property Name="PlanId" Type="int" Nullable="false" />
+          <Property Name="PaymentFromDate" Type="date" Nullable="false" />
+          <Property Name="PaymentToDate" Type="date" Nullable="false" />
+          <Property Name="PaymentAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlanMaster">
+          <Key>
+            <PropertyRef Name="PlanId" />
+          </Key>
+          <Property Name="PlanId" Type="int" Nullable="false" />
+          <Property Name="PlanName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PlanAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ServiceTaxAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ServiceTax" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreateDate" Type="date" Nullable="false" />
+          <Property Name="CreateUserId" Type="int" Nullable="false" />
+          <Property Name="ModifyDate" Type="date" Nullable="false" />
+        </EntityType>
+        <Function Name="PaymentDetails_SelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PaymentPlansReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="PaymentPlansModelStoreContainer">
+          <EntitySet Name="PaymentDetails" EntityType="Self.PaymentDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlanMaster" EntityType="Self.PlanMaster" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PaymentPlansModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PaymentPlansEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="PaymentPlansReport" ReturnType="Collection(PaymentPlansModel.PaymentPlansReport_Result)" />
+          <EntitySet Name="PaymentDetails" EntityType="PaymentPlansModel.PaymentDetail" />
+          <EntitySet Name="PlanMasters" EntityType="PaymentPlansModel.PlanMaster" />
+          <FunctionImport Name="PaymentDetails_SelectAll" ReturnType="Collection(PaymentPlansModel.PaymentDetails_SelectAll_Result)" />
+        </EntityContainer>
+        <ComplexType Name="PaymentPlansReport_Result">
+          <Property Type="String" Name="PlanName" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="PaymentAmount" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
+        <EntityType Name="PaymentDetail">
+          <Key>
+            <PropertyRef Name="PaymentId" />
+          </Key>
+          <Property Name="PaymentId" Type="Int32" Nullable="false" />
+          <Property Name="PlanId" Type="Int32" Nullable="false" />
+          <Property Name="PaymentFromDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PaymentToDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PaymentAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="PlanMaster">
+          <Key>
+            <PropertyRef Name="PlanId" />
+          </Key>
+          <Property Name="PlanId" Type="Int32" Nullable="false" />
+          <Property Name="PlanName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PlanAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ServiceTaxAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ServiceTax" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreateUserId" Type="Int32" Nullable="false" />
+          <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <ComplexType Name="PaymentDetails_SelectAll_Result">
+          <Property Type="String" Name="PlanName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="PaymentFromDate" Nullable="false" />
+          <Property Type="DateTime" Name="PaymentToDate" Nullable="false" />
+          <Property Type="Decimal" Name="PaymentAmount" Nullable="false" Precision="18" Scale="2" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PaymentPlansModelStoreContainer" CdmEntityContainer="PaymentPlansEntities" >
+          <FunctionImportMapping FunctionImportName="PaymentPlansReport" FunctionName="PaymentPlansModel.Store.PaymentPlansReport">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PaymentPlansModel.PaymentPlansReport_Result">
+                <ScalarProperty Name="PlanName" ColumnName="PlanName" />
+                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="PaymentDetails">
+            <EntityTypeMapping TypeName="PaymentPlansModel.PaymentDetail">
+              <MappingFragment StoreEntitySet="PaymentDetails">
+                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
+                <ScalarProperty Name="PaymentToDate" ColumnName="PaymentToDate" />
+                <ScalarProperty Name="PaymentFromDate" ColumnName="PaymentFromDate" />
+                <ScalarProperty Name="PlanId" ColumnName="PlanId" />
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlanMasters">
+            <EntityTypeMapping TypeName="PaymentPlansModel.PlanMaster">
+              <MappingFragment StoreEntitySet="PlanMaster">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ServiceTax" ColumnName="ServiceTax" />
+                <ScalarProperty Name="ServiceTaxAmount" ColumnName="ServiceTaxAmount" />
+                <ScalarProperty Name="PlanAmount" ColumnName="PlanAmount" />
+                <ScalarProperty Name="PlanName" ColumnName="PlanName" />
+                <ScalarProperty Name="PlanId" ColumnName="PlanId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PaymentDetails_SelectAll" FunctionName="PaymentPlansModel.Store.PaymentDetails_SelectAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PaymentPlansModel.PaymentDetails_SelectAll_Result">
+                <ScalarProperty Name="PlanName" ColumnName="PlanName" />
+                <ScalarProperty Name="PaymentFromDate" ColumnName="PaymentFromDate" />
+                <ScalarProperty Name="PaymentToDate" ColumnName="PaymentToDate" />
+                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Payment Plans";
+}
+
+@model IEnumerable<PaymentDetails_SelectAll_Result>
+
+<h2>@ViewBag.Title</h2>
+<hr /><br />
+<hr />
+<div class="row" style="font-weight:700;">
+    <div class="col-md-3">Plan Name</div>
+    <div class="col-md-3">Start Date</div>
+    <div class="col-md-3">End Date</div>
+    <div class="col-md-3">Payment Amount</div>
+</div>
+<hr />
+@foreach (PaymentDetails_SelectAll_Result p in Model)
+{
+    <div class="row">
+        <div class="col-md-3">@p.PlanName</div>
+        <div class="col-md-3">@p.PaymentFromDate</div>
+        <div class="col-md-3">@p.PaymentToDate</div>
+        <div class="col-md-3">$@p.PaymentAmount</div>
+    </div>
+}
+
